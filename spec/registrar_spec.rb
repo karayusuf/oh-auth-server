@@ -4,21 +4,23 @@ require 'oh_auth/registrar'
 module OhAuth
   describe Registrar do
     describe "#register_application" do
-      let(:registrar) { Registrar.new }
+      before do
+        Registrar.applications.clear
+      end
 
       it "registers new applications" do
-        registrar.register_application('Foo', 'http://foo.example.com')
+        Registrar.register_application('Foo', 'http://foo.example.com')
 
-        applications = registrar.applications.map(&:name)
+        applications = Registrar.applications.map(&:name)
         expect(applications).to eql ['Foo']
       end
 
       it "does not register an application that has already been registered" do
-        registrar.register_application('Foo', 'http://foo.example.com')
-        registrar.register_application('Foo', 'http://foo.example.com')
+        Registrar.register_application('Bar', 'http://bar.example.com')
+        Registrar.register_application('Bar', 'http://bar.example.com')
 
-        applications = registrar.applications.map(&:name)
-        expect(applications).to eql ['Foo']
+        applications = Registrar.applications.map(&:name)
+        expect(applications).to eql ['Bar']
       end
     end
   end
