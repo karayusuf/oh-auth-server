@@ -2,14 +2,14 @@ require 'set'
 
 module OhAuth
   module Registrar
-    Application = Struct.new(:name, :redirect_uri)
+    Client = Struct.new(:name, :redirect_uri)
 
-    def self.applications
-      @applications ||= Set.new
+    def self.clients
+      @clients ||= Set.new
     end
 
-    def self.register_application(name, redirect_uri)
-      applications << Application.new(name, redirect_uri)
+    def self.register_client(name, redirect_uri)
+      clients << Client.new(name, redirect_uri)
     end
   end
 end
