@@ -1,5 +1,5 @@
 require 'galago/router'
-require_relative 'endpoint/authorize'
+require_relative 'endpoint/authenticate_user'
 
 module OhAuth
   class Server
