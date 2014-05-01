@@ -1,32 +1,25 @@
 require 'rack'
+require 'json'
+require 'oh_auth/user'
 
 module OhAuth
-  module Endpoint
-
-    class Authorize
-
-      REQUIRED_PARAMS = ['response_type', 'client_id']
+  module Endpoints
+    class AuthenticateUser
 
       def self.call(env)
-        new(env).response
+        Rack::Response.new(body)
       end
 
-      def initialize(request)
-        @request = Rack::Request.new(request)
+      def self.body
+        JSON({
+          "access_token"      => "2YotnFZFEjr1zCsicMWpAA",
+          "token_type"        => "example",
+          "expires_in"        => 3600,
+          "refresh_token"     => "tGzv3JOkF0XG5Qx2TlKWIA",
+          "example_parameter" => "example_value"
+        })
       end
 
-      def response
-        if valid_request?
-          Rack::Response.new('bar').finish
-        else
-          Rack::Response.new('invalid').finish
-        end
-      end
-
-      def valid_request?
-        REQUIRED_PARAMS.all? { |param| @request.params.has_key?(param) }
-      end
     end
-
   end
 end

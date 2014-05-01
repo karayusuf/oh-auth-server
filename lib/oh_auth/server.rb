@@ -1,12 +1,12 @@
 require 'galago/router'
-require_relative 'endpoint/authenticate_user'
+require_relative 'endpoints/authenticate_user'
 
 module OhAuth
   class Server
 
     def self.router
       @router ||= Galago::Router.new do
-        get 'auth', to: Endpoint::Authorize
+        post 'login', to: Endpoints::AuthenticateUser
       end
     end
 
