@@ -7,17 +7,29 @@ module OhAuth
     class AuthenticateUser
 
       def self.call(env)
-        Rack::Response.new(body)
+        request = Rack::Request.new(env)
+        user    = User.find(request.params['username'])
+
+        if user && user.authenticate?(request.params['password'])
+          Rack::Response.new(success)
+        else
+          Rack::Response.new(error, 401)
+        end
       end
 
-      def self.body
+      private
+
+      def self.success
         JSON({
           "access_token"      => "2YotnFZFEjr1zCsicMWpAA",
           "token_type"        => "example",
           "expires_in"        => 3600,
           "refresh_token"     => "tGzv3JOkF0XG5Qx2TlKWIA",
-          "example_parameter" => "example_value"
         })
+      end
+
+      def self.error
+        JSON({ "error" => "invalid username or password" })
       end
 
     end

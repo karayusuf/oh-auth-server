@@ -4,9 +4,6 @@ require 'oh_auth/registrar'
 module OhAuth
   describe Registrar do
     describe "#register_client" do
-      before do
-        Registrar.clients.clear
-      end
 
       it "registers new clients" do
         Registrar.register_client('Foo', 'http://foo.example.com')

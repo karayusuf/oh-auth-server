@@ -26,11 +26,21 @@ module OhAuth
       end
 
       context "with an invalid password" do
-        it "returns a 401 status code"
+        it "returns a 401 status code" do
+          User.create! 'john@example.com', 'secret'
+
+          post '/login', username: 'john@example.com', password: 'foo'
+
+          expect(last_response.status).to eql 401
+        end
       end
 
       context "with an unknown username" do
-        it "returns a 401 status code"
+        it "returns a 401 status code" do
+          post '/login', username: 'foo@example.com', password: 'foo'
+
+          expect(last_response.status).to eql 401
+        end
       end
     end
   end
