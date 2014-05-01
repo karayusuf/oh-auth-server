@@ -11,13 +11,19 @@ module OhAuth
         user    = User.find(request.params['username'])
 
         if user && user.authenticate?(request.params['password'])
-          Rack::Response.new(success)
+          render_json(success, 200)
         else
-          Rack::Response.new(error, 401)
+          render_json(error, 401)
         end
       end
 
       private
+
+      def self.render_json(body, status_code)
+        Rack::Response.new(body, status_code, {
+          'Content-Type' => 'application/json'
+        })
+      end
 
       def self.success
         JSON({
@@ -35,3 +41,4 @@ module OhAuth
     end
   end
 end
+
