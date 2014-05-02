@@ -28,7 +28,7 @@ module OhAuth
       def self.success
         JSON({
           "access_token"      => "2YotnFZFEjr1zCsicMWpAA",
-          "token_type"        => "example",
+          "token_type"        => "Bearer",
           "expires_in"        => 3600,
           "refresh_token"     => "tGzv3JOkF0XG5Qx2TlKWIA",
         })

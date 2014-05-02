@@ -23,6 +23,13 @@ module OhAuth
           response = JSON.parse(last_response.body)
           expect(response).to have_key 'access_token'
         end
+
+        it "returns the token type" do
+          post '/login', username: 'john@example.com', password: 'secret'
+
+          response = JSON.parse(last_response.body)
+          expect(response['token_type']).to eql 'Bearer'
+        end
       end
 
       context "with an invalid password" do
