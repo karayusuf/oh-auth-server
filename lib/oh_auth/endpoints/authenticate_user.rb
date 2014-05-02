@@ -1,7 +1,7 @@
 require 'rack'
 require 'json'
 
-require 'oh_auth/user'
+require 'oh_auth/models/user'
 require 'oh_auth/models/token'
 
 module OhAuth

@@ -2,7 +2,7 @@ require 'rspec'
 require 'rack/test'
 
 require 'oh_auth/registrar'
-require 'oh_auth/user'
+require 'oh_auth/models/user'
 
 RSpec.configure do |config|
   config.color_enabled = true

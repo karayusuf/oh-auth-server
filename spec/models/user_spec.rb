@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'oh_auth/user'
+require 'oh_auth/models/user'
 
 module OhAuth
   describe User do
