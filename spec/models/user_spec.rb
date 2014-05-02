@@ -6,7 +6,9 @@ module OhAuth
     describe ".create!" do
       it "adds the user" do
         User.create!('john@example.com', 'secret-password')
-        expect(User.all.map(&:username)).to eql ['john@example.com']
+
+        user = User.find('john@example.com')
+        expect(user.username).to eql 'john@example.com'
       end
 
       it "raises an error when the username has been taken" do
@@ -27,7 +29,7 @@ module OhAuth
 
       it "returns nil when the user is not found" do
         user = User.find('foobar@example.com')
-        expect(user).to be_nil
+        expect(user.username).to eql 'InvalidUser'
       end
 
     end

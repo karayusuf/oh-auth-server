@@ -1,23 +1,27 @@
+require 'oh_auth/data_store'
+
 module OhAuth
   class DuplicateUser < StandardError
   end
 
   class User
 
-    def self.all
-      @users ||= []
+    def self.key_for(username)
+      "user:#{username.downcase}"
     end
 
     def self.create!(username, password)
-      if find(username)
-        raise DuplicateUser.new(username)
-      else
-        all << new(username, password)
-      end
+      key  = key_for(username)
+      user = DataStore.create!(key, username: username, password: password)
+      user or fail DuplicateUser.new(username)
     end
 
     def self.find(username)
-      all.detect { |user| user.username.downcase == username.downcase }
+      key = key_for(username)
+      attrs = DataStore.find(key)
+      attrs['username'] ||= 'InvalidUser'
+
+      new(attrs['username'], attrs['password'])
     end
 
     attr_reader :username, :password

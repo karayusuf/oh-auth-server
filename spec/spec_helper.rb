@@ -12,6 +12,6 @@ RSpec.configure do |config|
 
   config.before do
     OhAuth::Registrar.clients.clear
-    OhAuth::User.all.clear
+    OhAuth::DataStore::DB.flushdb
   end
 end
