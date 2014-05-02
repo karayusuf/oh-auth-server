@@ -6,7 +6,7 @@ module OhAuth
 
     def self.router
       @router ||= Galago::Router.new do
-        post 'login', to: Endpoints::AuthenticateUser
+        post 'token', to: Endpoints::AuthenticateUser
       end
     end
 

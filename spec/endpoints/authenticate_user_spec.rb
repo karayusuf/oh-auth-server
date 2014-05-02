@@ -13,14 +13,14 @@ module OhAuth
         end
 
         it "returns a 200 status code" do
-          post '/login', username: 'john@example.com', password: 'secret'
+          post '/token', username: 'john@example.com', password: 'secret'
           expect(last_response.status).to eql 200
         end
 
         it "generates an access token" do
           AccessToken.stub(:generate) { 'the-access-token' }
 
-          post '/login', username: 'john@example.com', password: 'secret'
+          post '/token', username: 'john@example.com', password: 'secret'
 
           response = JSON.parse(last_response.body)
           expect(response['access_token']).to eql 'the-access-token'
@@ -29,14 +29,14 @@ module OhAuth
         it "generates a refresh token" do
           RefreshToken.stub(:generate) { 'the-refresh-token' }
 
-          post '/login', username: 'john@example.com', password: 'secret'
+          post '/token', username: 'john@example.com', password: 'secret'
 
           response = JSON.parse(last_response.body)
           expect(response['refresh_token']).to eql 'the-refresh-token'
         end
 
         it "sets the token type" do
-          post '/login', username: 'john@example.com', password: 'secret'
+          post '/token', username: 'john@example.com', password: 'secret'
 
           response = JSON.parse(last_response.body)
           expect(response['token_type']).to eql 'Bearer'
@@ -47,7 +47,7 @@ module OhAuth
         it "returns a 401 status code" do
           User.create! 'john@example.com', 'secret'
 
-          post '/login', username: 'john@example.com', password: 'foo'
+          post '/token', username: 'john@example.com', password: 'foo'
 
           expect(last_response.status).to eql 401
         end
@@ -55,7 +55,7 @@ module OhAuth
 
       context "with an unknown username" do
         it "returns a 401 status code" do
-          post '/login', username: 'foo@example.com', password: 'foo'
+          post '/token', username: 'foo@example.com', password: 'foo'
 
           expect(last_response.status).to eql 401
         end
