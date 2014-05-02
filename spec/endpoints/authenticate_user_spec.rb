@@ -17,14 +17,25 @@ module OhAuth
           expect(last_response.status).to eql 200
         end
 
-        it "returns an access token" do
+        it "generates an access token" do
+          AccessToken.stub(:generate) { 'the-access-token' }
+
           post '/login', username: 'john@example.com', password: 'secret'
 
           response = JSON.parse(last_response.body)
-          expect(response).to have_key 'access_token'
+          expect(response['access_token']).to eql 'the-access-token'
         end
 
-        it "returns the token type" do
+        it "generates a refresh token" do
+          RefreshToken.stub(:generate) { 'the-refresh-token' }
+
+          post '/login', username: 'john@example.com', password: 'secret'
+
+          response = JSON.parse(last_response.body)
+          expect(response['refresh_token']).to eql 'the-refresh-token'
+        end
+
+        it "sets the token type" do
           post '/login', username: 'john@example.com', password: 'secret'
 
           response = JSON.parse(last_response.body)

@@ -1,6 +1,8 @@
 require 'rack'
 require 'json'
+
 require 'oh_auth/user'
+require 'oh_auth/models/token'
 
 module OhAuth
   module Endpoints
@@ -27,10 +29,10 @@ module OhAuth
 
       def self.success
         JSON({
-          "access_token"      => "2YotnFZFEjr1zCsicMWpAA",
-          "token_type"        => "Bearer",
-          "expires_in"        => 3600,
-          "refresh_token"     => "tGzv3JOkF0XG5Qx2TlKWIA",
+          "access_token"  => AccessToken.generate,
+          "refresh_token" => RefreshToken.generate,
+          "token_type"    => "Bearer",
+          "expires_in"    => 3600
         })
       end
 
