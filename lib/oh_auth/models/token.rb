@@ -4,7 +4,9 @@ module OhAuth
   class Token
 
     def self.generate
-      Digest::SHA1.hexdigest "#{salt} #{current_time}"
+      token = Digest::SHA1.hexdigest "#{salt} #{current_time}"
+      DataStore.create!("#{key}:#{token}", expires_in: 3600)
+      token
     end
 
     private
@@ -20,9 +22,15 @@ module OhAuth
   end
 
   class AccessToken < Token
+    def self.key
+      "access_token"
+    end
   end
 
   class RefreshToken < Token
+    def self.key
+      "refresh_token"
+    end
   end
 end
 

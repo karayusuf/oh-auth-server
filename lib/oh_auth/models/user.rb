@@ -18,8 +18,9 @@ module OhAuth
 
     def self.find(username)
       key = key_for(username)
-      attrs = DataStore.find(key)
-      attrs['username'] ||= 'InvalidUser'
+      attrs = DataStore.find(key) do
+        { 'username' => 'InvalidUser' }
+      end
 
       new(attrs['username'], attrs['password'])
     end
