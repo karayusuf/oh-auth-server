@@ -9,6 +9,10 @@ module OhAuth
       token
     end
 
+    def self.exists?(token)
+      DataStore.has_key?("#{key}:#{token}")
+    end
+
     private
 
     def self.current_time
