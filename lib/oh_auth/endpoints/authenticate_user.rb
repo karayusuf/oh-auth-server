@@ -1,8 +1,8 @@
 require 'rack'
 require 'json'
 
-require 'oh_auth/models/user'
-require 'oh_auth/models/token'
+require_relative '../../oh_auth/models/user'
+require_relative '../../oh_auth/models/token'
 
 module OhAuth
   module Endpoints

@@ -1,4 +1,4 @@
-require 'oh_auth/data_store'
+require_relative '../../oh_auth/data_store'
 
 module OhAuth
   class DuplicateUser < StandardError
